@@ -1,5 +1,5 @@
 from mqtt_tet.mqtt_client import MQTT
-from cbk_process import CBK_Process as cbk_funcs
+from cbk_process import CBK_Process
 
 if __name__ == '__main__':
     mqtt_info = {
@@ -8,6 +8,7 @@ if __name__ == '__main__':
         "username":"admin",
         "pwd": "admin"
     }
+    cbk_funcs = CBK_Process()
     mqtt = MQTT()
     mqtt.mqtt_config(mqtt_info)
     mqtt.mqtt_set_cbk(cbk_funcs.mqtt_cbk_conn, cbk_funcs.mqtt_cbk_msg_recv)
