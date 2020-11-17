@@ -1,0 +1,30 @@
+{
+	"basedata":{
+		"Server": "dtiot.lucheng.gov.cn",
+		"Port": 8409,
+		"username": "admin",
+		"pwd": "admin"
+	},
+	"device_sn": "46B6F8D6F37",
+	"sub_sn": {
+		"sensor/node/callback_app_api/": {
+			"Type": "111",
+			"xxx": "yyy"
+		},
+		"sensor/node/base_device_data/": {
+			"Type": "111",
+			"xxx": "yyy"
+		}
+	},
+	"sub_no_sn": {
+		"sensor/node/callback_all_topic": {
+			"Type": "111",
+			"xxx": "yyy",
+			"bbb": "zzz"
+		},
+		"sensor/node/22222/": {
+			"Type": "111",
+			"xxx": "yyy"
+		}
+	}
+}
