@@ -5,7 +5,7 @@ from database import *
 import os, json
 
 def mqtt_get_conf(filename):
-    jsFile = systools.get_conf_from_files('config.json')
+    jsFile = sys_tools.get_conf_from_files('config.json')
     if jsFile != -1:
         if "basedata" in jsFile:
             if "Server" in jsFile["basedata"]:
@@ -41,12 +41,11 @@ def auto_sub(mqtt):
             mqtt.mqtt_sub_topic(j)
 
 if __name__ == '__main__':
-    systools = SysTools()
+    sys_tools = SysTools()
     cbk_funcs = CBK_Process()
     mqtt = MQTT()
 
     mqtt_get_conf('config.json')
-    print(sub_topic)
 
     mqtt.mqtt_config(mqtt_info)
     mqtt.mqtt_set_cbk(cbk_funcs.mqtt_cbk_conn, cbk_funcs.mqtt_cbk_msg_recv)

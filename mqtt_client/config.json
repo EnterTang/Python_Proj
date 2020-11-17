@@ -18,8 +18,8 @@
 	},
 	"sub_no_sn": {
 		"sensor/node/callback_all_topic": {
-			"Type": "111",
-			"xxx": "yyy",
+			"AllTopic": "xxx",
+			"ConnType": "run",
 			"bbb": "zzz"
 		},
 		"sensor/node/22222/": {
