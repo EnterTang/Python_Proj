@@ -16,10 +16,14 @@ class MQTT(object):
             self.port = 1883
 
         self.mqtt_config_flag |= 0x01
+        if 'username' in info:
+            self.username = info['username']
+        if 'pwd' in info:
+            self.pwd = info['pwd']
 
-    def mqtt_set_cbk(self):
-        self.client.on_connect = self.__on_connect
-        self.client.on_message = self.__on_message
+    def mqtt_set_cbk(self, cbk_conn, cbk_msg_recv):
+        self.client.on_connect = cbk_conn
+        self.client.on_message = cbk_msg_recv
 
         self.mqtt_config_flag |= 0x02
 
@@ -28,6 +32,8 @@ class MQTT(object):
             print(self.mqtt_config_flag)
             print("未设置mqtt broker等，请检查配置后重试!!!")
         else:
+            if(hasattr(self, "username") and hasattr(self, "pwd")):
+                self.client.username_pw_set(self.username, self.pwd)
             self.client.connect(self.server, self.port, 60)
 
         self.mqtt_config_flag |= 0x04
@@ -40,19 +46,21 @@ class MQTT(object):
     def __mqtt_loop(self):
         self.client.loop_start()
 
-    def __on_connect(self, client, userdata, flags, rc):
-        print("Connected with result code "+str(rc))
-        # Subscribing in on_connect() means that if we lose the connection and
-        # reconnect then subscriptions will be renewed.
-        client.subscribe("/python/test")
-
-    # The callback for when a PUBLISH message is received from the server.
-    def __on_message(self, client, userdata, msg):
-        print(msg.topic + " " + str(msg.payload))
-
     def mqtt_create_process(self):
         if self.mqtt_config_flag ^ 0x07:
             print("请先检查是否完成配置！！！")
         else:
            p1 = multiprocessing.Process(target=self.__mqtt_loop())
            p1.start()
+
+    '''
+        def __on_connect(self, client, userdata, flags, rc):
+            print("\nConnected with result code "+str(rc))
+            # Subscribing in on_connect() means that if we lose the connection and
+            # reconnect then subscriptions will be renewed.
+            client.subscribe("/python/test")
+
+        # The callback for when a PUBLISH message is received from the server.
+        def __on_message(self, client, userdata, msg):
+            print(msg.topic + " " + str(msg.payload))
+    '''
