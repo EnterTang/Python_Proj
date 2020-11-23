@@ -1,5 +1,5 @@
 from database import *
-import json
+import json, os, time
 class CBK_Process(object):
     def mqtt_cbk_conn(self, client, userdata, flags, rc):
         print("\nConnected with result code " + str(rc))
@@ -24,11 +24,21 @@ class CBK_Process(object):
                     # output_flag = 0
                     pass
         else:
-            output_flag = 1
+            topic_cut_sn = os.path.split(msg.topic)[0] + '/'
+            for j in sub_topic["sub_sn"][topic_cut_sn]:
+                if j in jsData:
+                    if sub_topic["sub_sn"][topic_cut_sn][j] == jsData[j]:
+                        output_flag = 1
+                    else:
+                        output_flag = 0
+                        break
+                else:
+                    pass
 
         if output_flag == 1:
             print('------------------------------------\n' + \
                   'topic: {}\n'.format(msg.topic) + \
                   'payload: {}\n'.format(json.dumps(jsData, sort_keys=True, indent=4, separators=(',', ':'))) + \
+                  'recvtime: {}\n'.format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) + \
                   '------------------------------------\n'
                   )

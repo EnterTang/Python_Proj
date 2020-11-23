@@ -20,25 +20,26 @@ def mqtt_get_conf(filename):
             device_info["sn"] = jsFile["device_sn"]
 
         if "sub_sn" in jsFile:
-            sub_sn_lst = []
-            for i in jsFile["sub_sn"]:
-                sub_sn_lst.append(i)
-            sub_topic["sub_sn"] = sub_sn_lst
+            sub_topic["sub_sn"] = jsFile["sub_sn"]
         if "sub_no_sn" in jsFile:
             # sub_no_sn_lst = {}
             # for i in jsFile["sub_no_sn"].items():
             sub_topic["sub_no_sn"] = jsFile["sub_no_sn"]
 
 def auto_sub(mqtt):
+    print("------------------------\n"
+          "订阅主题如下：\n",end="")
     if "sub_sn" in sub_topic:
         if "sn" in device_info:
             for i in sub_topic["sub_sn"]:
                 mix_topic = i + device_info["sn"]
-                print(mix_topic)
                 mqtt.mqtt_sub_topic(mix_topic)
+                print(mix_topic)
     if "sub_no_sn" in sub_topic:
         for j in sub_topic["sub_no_sn"]:
             mqtt.mqtt_sub_topic(j)
+            print(j)
+    print("------------------------\n")
 
 if __name__ == '__main__':
     sys_tools = SysTools()
