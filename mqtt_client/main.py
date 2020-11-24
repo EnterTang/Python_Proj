@@ -3,6 +3,8 @@ from cbk_process import CBK_Process
 from sys_tools.sys_tools import SysTools
 from database import *
 import os, json
+import sys
+from QT_GUI.PyQT5 import GUI_Qwidget, GUI_Qapp, GUI_QMainWindow
 
 def mqtt_get_conf(filename):
     jsFile = sys_tools.get_conf_from_files('config.json')
@@ -27,24 +29,37 @@ def mqtt_get_conf(filename):
             sub_topic["sub_no_sn"] = jsFile["sub_no_sn"]
 
 def auto_sub(mqtt):
-    print("------------------------\n"
-          "订阅主题如下：\n",end="")
+    jsData = {
+        "type": "subTopics",
+        "topics":[]
+    }
     if "sub_sn" in sub_topic:
         if "sn" in device_info:
             for i in sub_topic["sub_sn"]:
                 mix_topic = i + device_info["sn"]
                 mqtt.mqtt_sub_topic(mix_topic)
-                print(mix_topic)
+                jsData["topics"].append(mix_topic)
     if "sub_no_sn" in sub_topic:
         for j in sub_topic["sub_no_sn"]:
             mqtt.mqtt_sub_topic(j)
-            print(j)
-    print("------------------------\n")
+            jsData["topics"].append(j)
+    print(jsData)
+    return jsData
+
 
 if __name__ == '__main__':
+    # 注册观察者
+    observer = Observer()
+
     sys_tools = SysTools()
-    cbk_funcs = CBK_Process()
+    cbk_funcs = CBK_Process(observer)
     mqtt = MQTT()
+
+    app = GUI_Qapp()
+    gui_main = GUI_QMainWindow()
+    gui_main.show()
+
+    observer.attach(gui_main)
 
     mqtt_get_conf('config.json')
 
@@ -55,10 +70,7 @@ if __name__ == '__main__':
     '''
     sub topic here
     '''
-    auto_sub(mqtt)
-    # mqtt.mqtt_sub_topic("/python/test/aaa")
-    # mqtt.mqtt_pub_topic("/python/test/helloworld", "helloworld!!!")
-    while True:
-        if input("请输入q退出...") == 'q':
-            break
+    jsData = auto_sub(mqtt)
+    observer.data = jsData
+    sys.exit(app.exec_())
 

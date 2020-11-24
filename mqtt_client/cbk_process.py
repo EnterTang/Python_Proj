@@ -1,6 +1,9 @@
 from database import *
 import json, os, time
 class CBK_Process(object):
+    def __init__(self, observer):
+        self._observer = observer
+
     def mqtt_cbk_conn(self, client, userdata, flags, rc):
         print("\nConnected with result code " + str(rc))
         # Subscribing in on_connect() means that if we lose the connection and
@@ -36,9 +39,17 @@ class CBK_Process(object):
                     pass
 
         if output_flag == 1:
-            print('------------------------------------\n' + \
-                  'topic: {}\n'.format(msg.topic) + \
-                  'payload: {}\n'.format(json.dumps(jsData, sort_keys=True, indent=4, separators=(',', ':'))) + \
-                  'recvtime: {}\n'.format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) + \
-                  '------------------------------------\n'
-                  )
+            jsSend = {
+                "type":"showMsg"
+            }
+            jsSend["topic"] = msg.topic
+            jsSend["payload"] = json.dumps(jsData)
+            jsSend["recvtime"] = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+
+            self._observer.data = jsSend
+
+                  # '------------------------------------\n' + \
+                  # 'topic: {}\n'.format(msg.topic) + \
+                  # 'payload: {}\n'.format(json.dumps(jsData, sort_keys=True, indent=4, separators=(',', ':'))) + \
+                  # 'recvtime: {}\n'.format(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())) + \
+                  # '------------------------------------\n'
