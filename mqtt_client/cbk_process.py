@@ -14,7 +14,7 @@ class CBK_Process(object):
         if msg.topic in sub_topic["sub_no_sn"]:
             for i in sub_topic["sub_no_sn"][msg.topic]:
                 if i in jsData:
-                    if sub_topic["sub_no_sn"][msg.topic][i] == jsData[i]:
+                    if jsData[i] in sub_topic["sub_no_sn"][msg.topic][i]:
                         output_flag = 1
                     else:
                         output_flag = 0
@@ -27,7 +27,7 @@ class CBK_Process(object):
             topic_cut_sn = os.path.split(msg.topic)[0] + '/'
             for j in sub_topic["sub_sn"][topic_cut_sn]:
                 if j in jsData:
-                    if sub_topic["sub_sn"][topic_cut_sn][j] == jsData[j]:
+                    if jsData[j] in sub_topic["sub_sn"][topic_cut_sn][j]:
                         output_flag = 1
                     else:
                         output_flag = 0

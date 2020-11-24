@@ -7,21 +7,21 @@
 	},
 	"device_sn": "46B6F8D6F37",
 	"sub_sn": {
-		"sensor/node/base_device_data/": {
-			"ConnType": "webappDeviceDeploy"
-		},
-		"sensor/node/callback_app_api/": {
-			"ConnType": "get_elevatorDeploy"
+		"sensor/node/video/": {
+			"Sn": "46B6F8D6F37",
+            "ConnType": "pcVideoDevice/pcLinuxVideoDevice/pcLinuxCloseVideo"
 		}
 	},
 	"sub_no_sn": {
-		"sensor/node/app_api": {
-			"AllTopic":"get_elevator_deploy",
-			"ConnType": "get_elevator_deploy"
-		},
-		"sensor/node/callback_all_topic": {
-			"AllTopic":"callback_base_device_data",
- 			"ConnType": "webappDeviceDeploy"
-		}
+		"sensor/node/room": {
+            "AllTopic":"callback_video",
+            "ConnType": "calling_numbers/deviceVideoReady/deviceVideoStart",
+            "Sn": "46B6F8D6F37"
+        },
+        "sensor/node/callback_all_topic": {
+            "AllTopic":"callback_monitor",
+            "ConnType": "pcLinuxVideoDevice/pcLinuxCloseVideo",
+            "Sn": "46B6F8D6F37"
+        }
 	}
 }
