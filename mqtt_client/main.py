@@ -4,7 +4,7 @@ from sys_tools.sys_tools import SysTools
 from database import *
 import os, json
 import sys
-from QT_GUI.PyQT5 import GUI_Qwidget, GUI_Qapp, GUI_QMainWindow
+from QT_GUI.mainwindow import GUI_Qapp, GUI_MainWindow
 
 def mqtt_get_conf(filename):
     jsFile = sys_tools.get_conf_from_files('config.json')
@@ -56,8 +56,7 @@ if __name__ == '__main__':
     mqtt = MQTT()
 
     app = GUI_Qapp()
-    gui_main = GUI_QMainWindow()
-    gui_main.show()
+    gui_main = GUI_MainWindow()
 
     observer.attach(gui_main)
 

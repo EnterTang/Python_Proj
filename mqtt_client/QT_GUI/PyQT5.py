@@ -1,6 +1,6 @@
 import sys, json
-from PyQt5.QtWidgets import (QMainWindow, QWidget, QToolTip, QLabel, QTextBrowser, QGridLayout,
-    QPushButton, QApplication, QMessageBox, QDesktopWidget)
+from PyQt5.QtWidgets import (QMainWindow, QWidget, QToolTip, QLabel, QTextBrowser, QGridLayout, QVBoxLayout,
+    QFormLayout, QGroupBox, QScrollArea, QPushButton, QApplication, QMessageBox, QDesktopWidget)
 from PyQt5.QtGui import QIcon, QFont
 
 class GUI_Qapp(QApplication):
@@ -116,4 +116,3 @@ class GUI_QMainWindow(QMainWindow):
                         self.topicbrowser.append(i)
                 elif value["type"] == "showMsg":
                     self.txtbrowser.append(json.dumps(json.loads(value["payload"]), sort_keys=True, indent=4, separators=(',', ':')))
-        # pass

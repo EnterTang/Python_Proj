@@ -15,13 +15,11 @@
 	"sub_no_sn": {
 		"sensor/node/room": {
             "AllTopic":"callback_video",
-            "ConnType": "calling_numbers/deviceVideoReady/deviceVideoStart",
-            "Sn": "AE5DE7B26871"
+            "ConnType": "calling_numbers/deviceVideoReady/deviceVideoStart"
         },
         "sensor/node/callback_all_topic": {
             "AllTopic":"callback_monitor",
-            "ConnType": "pcLinuxVideoDevice/pcLinuxCloseVideo",
-            "Sn": "AE5DE7B26871"
+            "ConnType": "pcLinuxVideoDevice/pcLinuxCloseVideo"
         }
 	}
 }
